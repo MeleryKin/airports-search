@@ -5,10 +5,11 @@ public class RequestJob {
 
     public static ArrayList<Object> findRequiredRows(String template, ArrayList<String> lines) {
         ArrayList<Object> correctStrings = new ArrayList<>();
+        template = template.toLowerCase();
         int start = binarySearch(template, lines);
         for (int i = start; i < lines.size(); i++) {
             String line = lines.get(i);
-            String prefix = line.substring(0, Math.min(template.length(), line.length()));
+            String prefix = line.toLowerCase().substring(0, Math.min(template.length(), line.length()));
             if (template.compareTo(prefix) == 0) {
                 correctStrings.add(line);
             }
@@ -36,8 +37,8 @@ public class RequestJob {
         }
         else {
             list.sort(((o1, o2) -> {
-                o1 = o1.toString();
-                o2 = o2.toString();
+                o1 = o1.toString().toLowerCase();
+                o2 = o2.toString().toLowerCase();
                 return ((String)o1).compareTo((String)o2);
             }));
         }
@@ -45,9 +46,10 @@ public class RequestJob {
     }
 
     private static int binarySearch(String template, ArrayList<String> lines) {
+        template = template.toLowerCase();
         int left = -1, right = lines.size(), middle = (left + right) / 2;
         while (right - left > 1) {
-            String line = lines.get(middle);
+            String line = lines.get(middle).toLowerCase();
             if (template.compareTo(line) > 0) {
                 left = middle;
             }
